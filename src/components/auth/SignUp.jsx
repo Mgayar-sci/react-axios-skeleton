@@ -1,56 +1,21 @@
 import React from "react";
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-// import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import {
+  Avatar,
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  CssBaseline,
+  FormControlLabel,
+  Grid,
+  Link,
+  TextField,
+  Typography,
+} from "@mui/material";
 import * as ROUTES from "../../constants/routes";
 
 import AxiosContext from "../../Services/context";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-  error: {
-    color: "red",
-  },
-}));
+import Copyright from "../Copyright";
 
 const INITIAL_STATE = {
   email: "",
@@ -59,9 +24,8 @@ const INITIAL_STATE = {
 };
 
 export default function SignUp({ history }) {
-  const [{ name, email, password, error }, setSignUpFormState] = React.useState(
-    INITIAL_STATE
-  );
+  const [{ name, email, password, error }, setSignUpFormState] =
+    React.useState(INITIAL_STATE);
   const axios = React.useContext(AxiosContext);
 
   const isInvalid = password === "" || email === "" || name === "";
@@ -79,24 +43,37 @@ export default function SignUp({ history }) {
         history.goBack();
       })
       .catch((error) => {
-        if(error.response?.data?.error )
+        if (error.response?.data?.error)
           error.message = error.response.data.error + " - " + error.message;
         setSignUpFormState((prev) => ({ ...prev, error: error }));
       });
 
     event.preventDefault();
   };
-  const classes = useStyles();
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
-        <Avatar className={classes.avatar}>{/* <LockOutlinedIcon /> */}</Avatar>
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          {/* <LockOutlinedIcon /> */}
+        </Avatar>
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <Box
+          component="form"
+          sx={{ mt: 1 }}
+          onSubmit={handleSubmit}
+          autoComplete="on"
+        >
           <TextField
             variant="outlined"
             margin="normal"
@@ -138,17 +115,17 @@ export default function SignUp({ history }) {
             label="Remember me"
           />
           {isInvalid && (
-            <Box className={classes.error}>
+            <Box sx={{ color: "red" }}>
               {"Please enter email and password."}
             </Box>
           )}
-          {!!error && <Box className={classes.error}>{error.message}</Box>}
+          {!!error && <Box sx={{ color: "red" }}>{error.message}</Box>}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
-            className={classes.submit}
+            sx={{ mt: 3, mb: 2 }}
           >
             Sign Up
           </Button>
@@ -164,11 +141,9 @@ export default function SignUp({ history }) {
               </Link>
             </Grid>
           </Grid>
-        </form>
-      </div>
-      <Box mt={8}>
-        <Copyright />
+        </Box>
       </Box>
+      <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>
   );
 }

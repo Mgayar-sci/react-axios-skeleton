@@ -1,16 +1,18 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Axios from "./Services/axiosService";
 import AxiosContext from "./Services/context";
 
-ReactDOM.render(
-  <AxiosContext.Provider value={new Axios()}>
-    <App />
-  </AxiosContext.Provider>,
-  document.getElementById("root")
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(
+  <React.StrictMode>
+    <AxiosContext.Provider value={new Axios()}>
+      <App />
+    </AxiosContext.Provider>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
