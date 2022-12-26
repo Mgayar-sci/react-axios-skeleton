@@ -13,6 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import * as ROUTES from "../../constants/routes";
+import { useNavigate } from "react-router-dom";
 
 import AxiosContext from "../../Services/context";
 import Copyright from "../Copyright";
@@ -23,7 +24,8 @@ const INITIAL_STATE = {
   error: null,
 };
 
-export default function SignUp({ history }) {
+export default function SignUp() {
+  const navigate = useNavigate();
   const [{ name, email, password, error }, setSignUpFormState] =
     React.useState(INITIAL_STATE);
   const axios = React.useContext(AxiosContext);
@@ -40,7 +42,7 @@ export default function SignUp({ history }) {
       .createUserWithEmailAndPassword(name, email, password)
       .then(() => {
         setSignUpFormState(INITIAL_STATE);
-        history.goBack();
+        navigate("/home");
       })
       .catch((error) => {
         if (error.response?.data?.error)

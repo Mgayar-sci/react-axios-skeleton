@@ -12,6 +12,7 @@ import {
   Typography,
 } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 import * as ROUTES from "../../constants/routes";
 
@@ -24,7 +25,8 @@ const INITIAL_STATE = {
   error: null,
 };
 
-export default function SignIn({ history }) {
+export default function SignIn() {
+  const navigate = useNavigate();
   const [{ email, password, error }, setSignInFormState] =
     React.useState(INITIAL_STATE);
   const axios = React.useContext(AxiosContext);
@@ -41,7 +43,7 @@ export default function SignIn({ history }) {
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         setSignInFormState(INITIAL_STATE);
-        history.goBack();
+        navigate("/home");
       })
       .catch((error) => {
         if (error.response?.data?.error)
