@@ -4,6 +4,7 @@ import AxiosConfig from "./config";
 export default class Axios {
   constructor() {
     this.auth = axios.create(AxiosConfig);
+    // console.log('AxiosConfig.baseURL', AxiosConfig.baseURL);
   }
 
   // *** Auth API ***

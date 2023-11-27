@@ -1,5 +1,5 @@
 const AxiosConfig = {
-  baseURL: 'http://localhost:5000/',
+  baseURL: process.env.REACT_APP_API_URL ,
   timeout: 10000,
   headers: {'X-User-Token': ''}
 };
